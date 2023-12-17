@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Leaflet Map</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+</head>
+<body>
+<div id="map" style="width: 800px; height: 600px;"></div>
+<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+<script>
+    // Initialize the map
+    var map = L.map('map').setView([0, 0], 2); // Set initial view to the world
+
+    // Add a tile layer (you can use a different tile layer if needed)
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+    }).addTo(map);
+
+    // Add a marker to the map
+    var marker = L.marker([0, 0], { draggable: true }).addTo(map);
+
+    // Function to handle marker dragend event
+    function onMarkerDragEnd(event) {
+        var marker = event.target;
+        var position = marker.getLatLng();
+        console.log('Latitude: ' + position.lat + ', Longitude: ' + position.lng);
+    }
+
+    // Add an event listener for marker dragend
+    marker.on('dragend', onMarkerDragEnd);
+
+    // Function to handle map click event
+    function onMapClick(e) {
+        marker.setLatLng(e.latlng);
+        console.log('Latitude: ' + e.latlng.lat + ', Longitude: ' + e.latlng.lng);
+    }
+
+    // Add an event listener for map click
+    map.on('click', onMapClick);
+
+</script>
+</body>
+</html>
